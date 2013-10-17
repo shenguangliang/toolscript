@@ -65,32 +65,34 @@ function treescandir($path,$parent){
 	}       
 }
 
+$apps = array("RenrenOfficial-iOS-Concept","RenrenOfficial-iPad","RRSpring");
+$strApp = '/APP';
+$buildTypeNight = 'NightBuild';
+$buildTypeCI = 'CI';
+
+function createApps($appName,$type){
+// 		global $strApp , $buildTypeNight , $buildTypeCI;
+		foreach($documents as $doc){
+   			if($doc["isDir"] == 1 && ($doc["displayName"] === $type)){
+      			if((strrpos($doc["URL"],$appName.'/APP') > 0)){
+					echo createSeparatorMark($appName." ".$doc["displayName"]);      
+      			}
+   			}
+   			if($doc["isDir"] == 0 && strrpos($doc["URL"],$appName.'/APP') > 0 )
+   			{
+   				echo createAmark($doc["URL"],$doc["displayName"]);
+   			}
+		}
+}
 treescandir(dirname(__FILE__),0);
 
 echo createSeparatorMark("");
+createApps($apps[0],$buildTypeCI);
 
-foreach($documents as $doc){
-   if($doc["isDir"] == 1 && ($doc["displayName"] === "NightBuild" || $doc["displayName"] === "CI")){
-      if((strrpos($doc["URL"],'RenrenOfficial-iOS-Concept/APP') > 0)){
-	echo createSeparatorMark("RenrenOfficial-iOS-Concept ".$doc["displayName"]);      
-      }
-      if((strrpos($doc["URL"],'RenrenOfficial-iPad/APP') > 0)){
-        echo createSeparatorMark("RenrenOfficial-iPad ".$doc["displayName"]);
-      }
-      if((strrpos($doc["URL"],'RRSpring/APP') > 0)){
-        echo createSeparatorMark("RRSpring ".$doc["displayName"]);
-      }
-   }
-   if($doc["isDir"] == 0 && (strrpos($doc["URL"],'RenrenOfficial-iOS-Concept/APP') > 0 
-   							|| strrpos($doc["URL"],'RenrenOfficial-iPad/APP') > 0
-   							|| strrpos($doc["URL"],'RRSpring/APP') > 0)){
-   		echo createAmark($doc["URL"],$doc["displayName"]);
-   }
-}
 ?>
 
 <?php
-        echo createSeparatorMark("");
+    echo createSeparatorMark("");
 	echo("IOS & QA Team On : ".date("l dS \of F Y h:i:s A") . "<br />");
 ?>
 </body>
