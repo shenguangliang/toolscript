@@ -6,7 +6,22 @@
 
 <body>
 
-<h1><a href='tree.php'>Document Tree</a></h1>
+<?php 
+
+$apps = array("RenrenOfficial-iOS-Concept","RenrenOfficial-iPad","RRSpring");
+$buildTypeNight = 'NightBuild';
+$buildTypeCI = 'CI';
+
+?>
+
+<h1><a href='tree.php'>Document Tree</a>
+<?php
+	foreach($apps as $appStr){
+		echo "<a href='index.php?app=".$appStr."&type=".$buildTypeCI."'>".$appStr." ".$buildTypeCI."</a>  ";
+		echo "<a href='index.php?app=".$appStr."&type=".$buildTypeNight."'>".$appStr." ".$buildTypeNight."</a>  ";
+	}
+?>
+</h1>
 
 <h1>IOS Build</h1>
 
@@ -65,30 +80,37 @@ function treescandir($path,$parent){
 	}       
 }
 
-$apps = array("RenrenOfficial-iOS-Concept","RenrenOfficial-iPad","RRSpring");
-$strApp = '/APP';
-$buildTypeNight = 'NightBuild';
-$buildTypeCI = 'CI';
-
-function createApps($appName,$type){
-global $documents;
-// 		global $strApp , $buildTypeNight , $buildTypeCI;
-		foreach($documents as $doc){
+function createApps($appName,$type = "CI"){
+	global $documents;
+	foreach($documents as $doc){
    			if($doc["isDir"] == 1 && ($doc["displayName"] === $type)){
-      			if((strrpos($doc["URL"],$appName.'/APP') > 0)){
-				echo createSeparatorMark($appName." ".$doc["displayName"]);      
+      			if((strrpos($doc["URL"],$appName.'/APP/'.$stype) > 0)){
+					echo createSeparatorMark($appName." ".$doc["displayName"]);      
       			}
    			}
    			if($doc["isDir"] == 0 && strrpos($doc["URL"],$appName.'/APP/'.$type) > 0 )
    			{
    				echo createAmark($doc["URL"],$doc["displayName"]);
    			}
-		}
+	}
 }
 treescandir(dirname(__FILE__),0);
 
 echo createSeparatorMark("");
-createApps("RenrenOfficial-iOS-Concept","CI");
+
+$app = $_REQUEST["app"];
+$type = $_REQUEST["type"];
+
+if($app && in_array($app,$apps) && $type 
+	&& ($type === $buildTypeNight || $type === $buildTypeCI)){
+	createApps($app,$type);
+}else{
+	foreach($apps as $appStr){
+		createApps($appStr,$buildTypeCI);
+		createApps($appStr,$buildTypeNight);
+	}
+
+}
 
 ?>
 
