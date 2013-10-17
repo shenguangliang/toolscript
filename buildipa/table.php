@@ -68,7 +68,9 @@ foreach($documents as $doc){
    if($doc["isDir"] == 1 && ($doc["displayName"] === "NightBuild" || $doc["displayName"] === "CI")){
 		echo "</table><table>";
    }
-   if($doc["isDir"] == 0){
+   if($doc["isDir"] == 0 && (strrpos($doc["URL"],'RenrenOfficial-iOS-Concept/APP') > 0 
+   							|| strrpos($doc["URL"],'RenrenOfficial-iPad/APP') > 0
+   							|| strrpos($doc["URL"],'RRSpring/APP') > 0)){
    		echo "<tr><td>".$doc["displayName"]."<td></tr>";
    }
 }
