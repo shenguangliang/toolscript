@@ -33,12 +33,10 @@ function createDtree($idx,$parent,$fileName,$isDir = 0){
 	
 	$document = array("index" => $idx,"parent" => $parent,"displayName" => $displayName , "isDir" =>  $isDir ,"URL" => createURL($fileName));
 	$documents[$idx] = $document;
-	
-// 	if($isDir == 1)
-		
-		//echo "d.add(".$idx.",".$parent.",'".$displayName."');"; 
-// 	else
-// 		echo "d.add(".$idx.",".$parent.",'".$displayName."','".createURL($fileName)."');"; 
+}
+
+function createAmark($URL,$name){
+	return '<a href="'.$URL.'">'.$name.'</a>';
 }
 
 $index = 0;
@@ -65,13 +63,13 @@ function treescandir($path,$parent){
 treescandir(dirname(__FILE__),0);
 
 foreach($documents as $doc){
-   if($doc["isDir"] == 1 && ($doc["displayName"] === "NightBuild" || $doc["displayName"] === "CI")){
-		echo "</table><table>";
-   }
+// if($doc["isDir"] == 1 && ($doc["displayName"] === "NightBuild" || $doc["displayName"] === "CI")){
+// 		echo "</table><table>";
+//    }
    if($doc["isDir"] == 0 && (strrpos($doc["URL"],'RenrenOfficial-iOS-Concept/APP') > 0 
    							|| strrpos($doc["URL"],'RenrenOfficial-iPad/APP') > 0
    							|| strrpos($doc["URL"],'RRSpring/APP') > 0)){
-   		echo "<tr><td>".$doc["displayName"]."<td></tr>";
+   		echo createAmark($doc["URL"],$doc["displayName"])."<br/>";
    }
 }
 ?>
