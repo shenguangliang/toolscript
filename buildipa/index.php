@@ -71,14 +71,15 @@ $buildTypeNight = 'NightBuild';
 $buildTypeCI = 'CI';
 
 function createApps($appName,$type){
+global $documents;
 // 		global $strApp , $buildTypeNight , $buildTypeCI;
 		foreach($documents as $doc){
    			if($doc["isDir"] == 1 && ($doc["displayName"] === $type)){
       			if((strrpos($doc["URL"],$appName.'/APP') > 0)){
-					echo createSeparatorMark($appName." ".$doc["displayName"]);      
+				echo createSeparatorMark($appName." ".$doc["displayName"]);      
       			}
    			}
-   			if($doc["isDir"] == 0 && strrpos($doc["URL"],$appName.'/APP') > 0 )
+   			if($doc["isDir"] == 0 && strrpos($doc["URL"],$appName.'/APP/'.$type) > 0 )
    			{
    				echo createAmark($doc["URL"],$doc["displayName"]);
    			}
@@ -87,7 +88,7 @@ function createApps($appName,$type){
 treescandir(dirname(__FILE__),0);
 
 echo createSeparatorMark("");
-createApps($apps[0],$buildTypeCI);
+createApps("RenrenOfficial-iOS-Concept","CI");
 
 ?>
 
