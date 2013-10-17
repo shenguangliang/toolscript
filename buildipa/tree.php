@@ -34,36 +34,10 @@ function createURL($fileName){
 	}
 }
 
-function createAmark($URL,$name,$left){
-	return '<a style="margin-left:'.($left * 30 ).'px;" href="'.$URL.'">'.$name.'</a>';
-}
-
-function createSeparatorMark($name,$width){
-	return "<h3>".$name."</h3><hr size='2' align='left' width='".(5 * $width)."%'/>";
-}
-
-function myscandir($path){
-	$mydir = dir($path);
-	$dirName = dirname(__FILE__);
-
-	foreach(scandir($path,1) as $file){
-		$p = $path.'/'.$file;
-		if(($file != ".") AND ($file != "..")){
-			$fileName = substr($p,strlen($dirName) + 1);
-			if(is_dir($p) && count(scandir($path,1)) > 0){
-				echo createSeparatorMark($fileName,substr_count($fileName,'/'));
-				myscandir($p);
-			}else{
-				echo createAmark(createURL($fileName),$fileName,substr_count($fileName,'/')).'<br>';
-			}	
-	    }
-	}       
-}
-
 function createDtree($idx,$parent,$fileName,$isDir = 0){
 	if($isDir != 1 && strrpos($fileName,'.ipa') <= 0 && strrpos($fileName,'.plist') <= 0)
             return;
-	$displayName = substr($fileName,strrpos($fileName,'/') >= 0 ? strrpos($fileName,'/') + 1 : 0);
+	$displayName = substr($fileName,strrpos($fileName,'/') > 0 ? strrpos($fileName,'/') + 1 : 0);
 	if($isDir == 1)
 		echo "d.add(".$idx.",".$parent.",'".$displayName."');"; 
 	else
