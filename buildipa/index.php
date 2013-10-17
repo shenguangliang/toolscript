@@ -73,7 +73,7 @@ foreach($documents as $doc){
    if($doc["isDir"] == 0 && (strrpos($doc["URL"],'RenrenOfficial-iOS-Concept/APP') > 0 
    							|| strrpos($doc["URL"],'RenrenOfficial-iPad/APP') > 0
    							|| strrpos($doc["URL"],'RRSpring/APP') > 0)){
-   		echo createAmark($doc["URL"],$doc["displayName"])."<br/><br/>";
+   		echo createAmark($doc["URL"],$doc["displayName"]);
    }
 }
 ?>
