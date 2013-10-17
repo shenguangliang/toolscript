@@ -65,10 +65,15 @@ function treescandir($path,$parent){
 treescandir(dirname(__FILE__),0);
 
 foreach($documents as $doc){
-   echo $doc["URL"];
+   if($doc["isDir"] == 1 && ($doc["displayName"] === "NightBuild" || $doc["displayName"] === "CI")){
+		echo "</table><table>";
+   }
+   if($doc["isDir"] == 0){
+   		echo "<tr><td>".$doc["displayName"]."<td></tr>";
+   }
 }
 ?>
-
+</table>
 <?php
 	echo("IOS & QA Team On : ".date("l dS \of F Y h:i:s A") . "<br />");
 ?>
