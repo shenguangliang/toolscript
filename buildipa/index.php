@@ -67,9 +67,20 @@ function treescandir($path,$parent){
 
 treescandir(dirname(__FILE__),0);
 
-createSeparatorMark("");
+echo createSeparatorMark("");
 
 foreach($documents as $doc){
+   if($doc["isDir"] == 1 && ($doc["displayName"] === "NightBuild" || $doc["displayName"] === "CI")){
+      if((strrpos($doc["URL"],'RenrenOfficial-iOS-Concept/APP') > 0)){
+	echo createSeparatorMark("RenrenOfficial-iOS-Concept ".$doc["displayName"]);      
+      }
+      if((strrpos($doc["URL"],'RenrenOfficial-iPad/APP') > 0)){
+        echo createSeparatorMark("RenrenOfficial-iPad ".$doc["displayName"]);
+      }
+      if((strrpos($doc["URL"],'RRSpring/APP') > 0)){
+        echo createSeparatorMark("RRSpring ".$doc["displayName"]);
+      }
+   }
    if($doc["isDir"] == 0 && (strrpos($doc["URL"],'RenrenOfficial-iOS-Concept/APP') > 0 
    							|| strrpos($doc["URL"],'RenrenOfficial-iPad/APP') > 0
    							|| strrpos($doc["URL"],'RRSpring/APP') > 0)){
@@ -79,7 +90,7 @@ foreach($documents as $doc){
 ?>
 
 <?php
-	createSeparatorMark("");
+        echo createSeparatorMark("");
 	echo("IOS & QA Team On : ".date("l dS \of F Y h:i:s A") . "<br />");
 ?>
 </body>
