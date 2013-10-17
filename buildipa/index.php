@@ -1,6 +1,6 @@
 <html>
 <body>
-
+<h1><a href='tree.php'>Document Tree</a></h1>
 <?php
 // create by siglea on Tuesday 15th of October 2013 08:43:55 PM
  
@@ -35,7 +35,10 @@ function myscandir($path){
 				echo createSeparatorMark($fileName);
 				myscandir($p);
 			}else{
-				echo createAmark(createURL($fileName),$fileName).'<br>';
+				if(strrpos($fileName,'.ipa') > 0 || strrpos($fileName,'.plist') > 0)
+				{
+					echo createAmark(createURL($fileName),$fileName).'<br>';
+				}
 			}	
 	    }
 	}       
