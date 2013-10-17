@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-	<title>IOS Build</title>
+	<title>IOS Builds</title>
 </head>
 
 <body>
@@ -14,14 +14,15 @@ $buildTypeCI = 'CI';
 
 ?>
 
-<h1><a href='tree.php'>Document Tree</a>
+<h1><a href='index.php'>HOME</a> <a href='tree.php'>Document Tree</a>  <a href='http://10.2.76.47:8080/jenkins'>jenkins</a></h1>
+<table width="60%">
 <?php
 	foreach($apps as $appStr){
-		echo "<a href='index.php?app=".$appStr."&type=".$buildTypeCI."'>".$appStr." ".$buildTypeCI."</a>  ";
-		echo "<a href='index.php?app=".$appStr."&type=".$buildTypeNight."'>".$appStr." ".$buildTypeNight."</a>  ";
+		echo "<tr><td><a href='index.php?app=".$appStr."&type=".$buildTypeCI."'>".$appStr." ".$buildTypeCI."</a></td>";
+		echo "<td><a href='index.php?app=".$appStr."&type=".$buildTypeNight."'>".$appStr." ".$buildTypeNight."</a></td></tr>";
 	}
 ?>
-</h1>
+</table>
 
 <h1>IOS Build</h1>
 
