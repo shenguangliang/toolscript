@@ -15,11 +15,11 @@ $buildTypeCI = 'CI';
 ?>
 
 <h1><a href='index.php'>HOME</a> <a href='tree.php'>Document Tree</a>  <a href='http://10.2.76.47:8080/jenkins'>jenkins</a></h1>
-<table width="60%">
+<table width="100%">
 <?php
 	foreach($apps as $appStr){
-		echo "<tr><td><a href='index.php?app=".$appStr."&type=".$buildTypeCI."'>".$appStr." ".$buildTypeCI."</a></td>";
-		echo "<td><a href='index.php?app=".$appStr."&type=".$buildTypeNight."'>".$appStr." ".$buildTypeNight."</a></td></tr>";
+		echo "<tr><td><h1><a href='index.php?app=".$appStr."&type=".$buildTypeCI."'>".$appStr." ".$buildTypeCI."</a></h1></td>";
+		echo "<td><h1><a href='index.php?app=".$appStr."&type=".$buildTypeNight."'>".$appStr." ".$buildTypeNight."</a></h1></td></tr>";
 	}
 ?>
 </table>
@@ -53,11 +53,11 @@ function createDtree($idx,$parent,$fileName,$isDir = 0){
 }
 
 function createAmark($URL,$name){
-	return '<h5><a href="'.$URL.'">'.$name.'</a></h5>';
+	return '<h2><a href="'.$URL.'">'.$name.'</a></h2>';
 }
 
 function createSeparatorMark($name){
-	return "<h3>".$name."</h3><hr size='2' align='left' width='40%'/>";
+	return "<h1>".$name."</h1><hr size='2' align='left' width='40%'/>";
 }
 
 $index = 0;

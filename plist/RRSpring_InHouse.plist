@@ -38,8 +38,8 @@
 				<string>${RenRen_Version}</string>
 				<key>kind</key>
 				<string>software</string>
-				<key>${RenRen_SubTitle}</key>
-				<string>RenRen SubTitle</string>
+				<key>subtitle</key>
+				<string>${RenRen_SubTitle}</string>
 				<key>title</key>
 				<string>${RenRen_Title}</string>
 			</dict>

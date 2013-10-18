@@ -1,4 +1,5 @@
 #! /usr/bin/env python
+#-*-coding:utf-8-*-
 import sys
 import os
 import getopt
@@ -15,11 +16,11 @@ def replaceContent():
   s = getContent()
   
   appurl = "RenRen APP URL"
-  version = "0.0"
-  largeImage = "RenRen Large Image"
-  smallImage = "Input RenRen Small Image"
-  subTitle = "Input RenRen SubTitle"
-  title = "Input RenRen Title"
+  version = "1.0"
+  largeImage = "http://10.2.76.47/download/img/Icon-144.png"
+  smallImage = "http://10.2.76.47/download/img/Icon-Small-50.png"
+  subTitle = "人人2014"
+  title = "人人2014"
   targetPlist = "app.plist"
 
   try:
