@@ -2,24 +2,30 @@
 <html>
 <head>
 	<title>IOS Builds</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
 
 <?php 
 
-$apps = array("RenrenOfficial-iOS-Concept","RenrenOfficial-iPad","RRSpring");
+$apps = array("RenrenOfficial-iOS-Concept" => "人人概念版","RenrenOfficial-iPad" => "人人Ipad","RRSpring" => "人人Iphone");
 $buildTypeNight = 'NightBuild';
 $buildTypeCI = 'CI';
+$ua = $_SERVER['HTTP_USER_AGENT'];
 
+function isIOS(){
+	global $ua;
+	return (stripos($ua,"iPhone") || stripos($ua,"iPod") || stripos($ua,"iPad"));	
+}
 ?>
 
 <h1><a href='index.php'>HOME</a> <a href='tree.php'>Document Tree</a>  <a href='http://10.2.76.47:8080/jenkins'>jenkins</a></h1>
 <table width="100%">
 <?php
-	foreach($apps as $appStr){
-		echo "<tr><td><h1><a href='index.php?app=".$appStr."&type=".$buildTypeCI."'>".$appStr." ".$buildTypeCI."</a></h1></td>";
-		echo "<td><h1><a href='index.php?app=".$appStr."&type=".$buildTypeNight."'>".$appStr." ".$buildTypeNight."</a></h1></td></tr>";
+	foreach(array_keys($apps) as $appStr){
+		echo "<tr><td><h1><a href='index.php?app=".$appStr."&type=".$buildTypeCI."'>".$apps[$appStr]." ".$buildTypeCI."</a></h1></td>";
+		echo "<td><h1><a href='index.php?app=".$appStr."&type=".$buildTypeNight."'>".$apps[$appStr]." ".$buildTypeNight."</a></h1></td></tr>";
 	}
 ?>
 </table>
@@ -43,9 +49,9 @@ function createURL($fileName){
 $documents = array();
 
 function createDtree($idx,$parent,$fileName,$isDir = 0){
-	if($isDir != 1 && strrpos($fileName,'.ipa') <= 0 && strrpos($fileName,'.plist') <= 0)
+	if($isDir != 1 && !strrpos($fileName,'.ipa')  && !strrpos($fileName,'.plist'))
             return;
-    global $documents;
+        global $documents;
 	$displayName = substr($fileName,strrpos($fileName,'/') > 0 ? strrpos($fileName,'/') + 1 : 0);
 	
 	$document = array("index" => $idx,"parent" => $parent,"displayName" => $displayName , "isDir" =>  $isDir ,"URL" => createURL($fileName));
@@ -83,14 +89,17 @@ function treescandir($path,$parent){
 
 function createApps($appName,$type = "CI"){
 	global $documents;
+	global $apps;
 	foreach($documents as $doc){
    			if($doc["isDir"] == 1 && ($doc["displayName"] === $type)){
       			if((strrpos($doc["URL"],$appName.'/APP/'.$stype) > 0)){
-					echo createSeparatorMark($appName." ".$doc["displayName"]);      
+					echo createSeparatorMark($apps[$appName]." ".$doc["displayName"]);      
       			}
    			}
    			if($doc["isDir"] == 0 && strrpos($doc["URL"],$appName.'/APP/'.$type) > 0 )
    			{
+				if(isIOS() && strrpos($doc["displayName"],'ipa') > 0)
+					continue;
    				echo createAmark($doc["URL"],$doc["displayName"]);
    			}
 	}
@@ -102,11 +111,11 @@ echo createSeparatorMark("");
 $app = $_REQUEST["app"];
 $type = $_REQUEST["type"];
 
-if($app && in_array($app,$apps) && $type 
+if($app && array_key_exists($app,$apps) && $type 
 	&& ($type === $buildTypeNight || $type === $buildTypeCI)){
 	createApps($app,$type);
 }else{
-	foreach($apps as $appStr){
+	foreach(array_keys($apps) as $appStr){
 		createApps($appStr,$buildTypeCI);
 		createApps($appStr,$buildTypeNight);
 	}
@@ -117,7 +126,7 @@ if($app && in_array($app,$apps) && $type
 
 <?php
     echo createSeparatorMark("");
-	echo("IOS & QA Team On : ".date("l dS \of F Y h:i:s A") . "<br />");
+    echo("IOS & QA Team On : ".date("l dS \of F Y h:i:s A") . "<br />".$ua);
 ?>
 </body>
 
