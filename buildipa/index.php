@@ -13,6 +13,7 @@ $apps = array("RenrenOfficial-iOS-Concept" => "人人概念版","RenrenOfficial-
 $buildTypeNight = 'NightBuild';
 $buildTypeCI = 'CI';
 $ua = $_SERVER['HTTP_USER_AGENT'];
+$maxDisplayBuilds = 10;
 
 function isIOS(){
 	global $ua;
@@ -90,6 +91,8 @@ function treescandir($path,$parent){
 function createApps($appName,$type = "CI"){
 	global $documents;
 	global $apps;
+	global $maxDisplayBuilds;
+	$buildCount = 0;
 	foreach($documents as $doc){
    			if($doc["isDir"] == 1 && ($doc["displayName"] === $type)){
       			if((strrpos($doc["URL"],$appName.'/APP/'.$stype) > 0)){
@@ -100,6 +103,8 @@ function createApps($appName,$type = "CI"){
    			{
 				if(isIOS() && strrpos($doc["displayName"],'ipa') > 0)
 					continue;
+                                if($buildCount ++ > $maxDisplayBuilds)
+					return;
    				echo createAmark($doc["URL"],$doc["displayName"]);
    			}
 	}
